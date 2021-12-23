@@ -12,12 +12,25 @@
             padding: 0;
         }
 
+        .all {
+            width: 1000px;
+            height: 800px;
+            margin: 0 auto;
+            background-image: url(https://w.wallhaven.cc/full/8o/wallhaven-8ogod1.jpg);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            background-attachment: fixed;
+
+        }
+
         .box1 {
             width: 380px;
-            /* height: 260px; */
-            background-color: rgb(127, 212, 255);
+            min-height: 100px;
+            max-height: 100%;
+            background-color: rgba(127, 212, 255, 0);
             margin: auto;
             text-align: center;
+            padding-top: 50px;
         }
 
         .tele {
@@ -48,14 +61,14 @@
             margin-left: auto;
             margin-right: auto;
             font-size: 20px;
-            color: rgb(0, 0, 0);
+            color: rgb(255, 255, 255);
             text-align: center;
         }
 
         .tiner0 span {
             width: 50px;
             height: 30px;
-            background-color: #e1ffe7;
+            /* background-color: #e1ffe7; */
             display: block;
             float: left;
 
@@ -68,19 +81,21 @@
 </head>
 
 <body>
-    <div class="box1">
-        <span class="tiner0">
-            <p>距结束</p> <span id="tinerd"></span>
-            <p>天</p>
-            <span id="tinerh"></span>
-            <p>小时</p>
-            <span id="tinerm"></span>
-            <p>分钟</p>
-            <span id="tiners"></span>
-            <p>秒</p>
-        </span>
-    </div>
+    <div class="all">
+        <div class="box1">
+            <span class="tiner0">
+                <p>距结束</p> <span id="tinerd"></span>
+                <p>天</p>
+                <span id="tinerh"></span>
+                <p>小时</p>
+                <span id="tinerm"></span>
+                <p>分钟</p>
+                <span id="tiners"></span>
+                <p>秒</p>
+            </span>
+        </div>
 
+    </div>
     <script>
         setInterval("functionName()", 1000);
 
