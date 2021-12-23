@@ -1,0 +1,116 @@
+layout: false
+---
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box1 {
+            width: 380px;
+            /* height: 260px; */
+            background-color: rgb(127, 212, 255);
+            margin: auto;
+            text-align: center;
+        }
+
+        .tele {
+            width: 100%;
+            text-align: center;
+            font-size: 30px;
+            font-weight: 700;
+            padding-top: 31px;
+            display: block;
+            color: #fff;
+        }
+
+        .tele2 {
+            text-align: center;
+            color: #fff;
+            padding-top: 90px;
+        }
+
+        .c16 {
+            font-weight: bolder;
+        }
+
+        .tiner0 {
+            width: 400px;
+            height: 30px;
+            margin-top: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 20px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .tiner0 span {
+            width: 50px;
+            height: 30px;
+            background-color: #2f3430;
+            display: block;
+            float: left;
+
+        }
+
+        .tiner0 p {
+            float: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box1">
+        <span class="tiner0">
+            <p>距结束</p> <span id="tinerd"></span>
+            <p>天</p>
+            <span id="tinerh"></span>
+            <p>小时</p>
+            <span id="tinerm"></span>
+            <p>分钟</p>
+            <span id="tiners"></span>
+            <p>秒</p>
+        </span>
+    </div>
+
+    <script>
+        setInterval("functionName()", 1000);
+
+
+        function functionName() {
+            function getDiff(d1, d2) {
+                var ss = Math.abs(d2 - d1) / 1000;
+                var day = Math.floor(ss / (24 * 60 * 60));
+                var hour = Math.floor((ss / 3600) % 24);
+                var minute = Math.floor((ss / 60) % 60);
+                var second = Math.floor(ss % 60);
+                return [day, hour, minute, second];
+            }
+            var oDate = new Date("2022-5-6 8:0:0"); //指定日期
+            var nowDate = new Date(); //当前日期
+            var time = getDiff(oDate, nowDate);
+            if (time[1] < 10) {
+                time[1] = "0" + time[1]
+            }
+
+            tinerd.innerText = time[0]
+            tinerh.innerText = time[1]
+            tinerm.innerText = time[2]
+            tiners.innerText = time[3]
+
+        }
+    </script>
+
+</body>
+
+</html>
