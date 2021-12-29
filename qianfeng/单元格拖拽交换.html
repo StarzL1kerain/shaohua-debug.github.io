@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            position: relative;
+            margin-left: 100px;
+
+        }
+
+        li {
+
+            list-style: none;
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            text-align: center;
+            line-height: 100px;
+            font-size: 30px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <ul>
+
+        </ul>
+    </div>
+    <script>
+        // var Color0 = ["A", "B", "C", "D", "E", "F", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ]
+
+
+        var oUl = document.querySelector("ul"); //取到ul
+        var mt = (ml = 10); //格子间距
+
+        var arr = [
+            ["A", "B", "C"],
+            ["D", "E", "F"],
+            ["G", "H", "I"],
+        ];
+        for (var i = 0; i < 3; i++) { //行
+            for (var j = 0; j < 3; j++) { //列
+                var oLi = document.createElement("li"); //生成li
+                oUl.appendChild(oLi); //添加oLi到oUl里
+                oLi.style.left = j * (oLi.offsetWidth + ml) + "px"; //左边距
+                oLi.style.top = i * (oLi.offsetHeight + mt) + "px"; //上边距
+                // oLi.style.backgroundColor = bColor(); //赋值颜色
+                oLi.style.backgroundColor =
+                    "rgb(" +
+                    Math.floor(Math.random() * 256) +
+                    "," +
+                    Math.floor(Math.random() * 256) +
+                    "," +
+                    Math.floor(Math.random() * 256) +
+                    ")";
+                oLi.innerText = arr[i][j]; //加入字母
+            }
+        }
+
+        // function bColor() { //随机颜色值
+        //     for (var i = 1, cColor = "#"; i <= 6; i++) {
+        //         var aColor = parseInt(Math.random() * Color0.length);
+        //         cColor += Color0[aColor]
+        //     }
+        //     return cColor
+        // }
+        var aItems = oUl.children; //获取oUl的所有孩子元素
+        for (var i = 0; i < aItems.length; i++) {
+            aItems[i].onmousedown = function (e) { //鼠标点击时
+                var evt = e || event;
+                //确定鼠标距离拖拽对象的一个左边距和上边距
+                var x = evt.offsetX;
+                var y = evt.offsetY;
+                //取到拖拽对象
+                var dragItem = this; //指向
+                //克隆节点 留一个占位
+                var cloneNode = dragItem.cloneNode();
+                oUl.replaceChild(cloneNode, dragItem); //用新的子元素替换已有的子元素
+                cloneNode.style.border = "1px dashed #cecece";
+                oUl.appendChild(dragItem);
+
+
+                //拖拽对象不被盖住
+                dragItem.style.zIndex = 1;
+                document.onmousemove = function (e) { //鼠标移动
+                    var evt = e || event;
+                    //拖拽对象的left和top
+                    var l = evt.clientX - x - oUl.offsetLeft; //相对于页面的横坐标-屏幕X坐标-元素左边
+                    var t = evt.clientY - y - oUl.offsetTop;
+                    dragItem.style.left = l + "px";
+                    dragItem.style.top = t + "px";
+
+                    return false;
+                };
+
+
+                document.onmouseup = function () { //鼠标抬起时
+                    var arrDis = []; //存距离的数组
+                    var copyArr = [];
+                    // console.log(aItems.length); //会动态改变
+                    for (var i = 0; i < aItems.length - 1; i++) {
+                        var disx = dragItem.offsetLeft - aItems[i].offsetLeft; //克隆的元素左边-选择的元素左边
+                        var disy = dragItem.offsetTop - aItems[i].offsetTop;
+                        var dis = Math.sqrt(Math.pow(disx, 2) + Math.pow(disy, 2)); //开方 a^2+b^2=c^2
+                        arrDis.push(dis);
+                        copyArr.push(dis);
+                    }
+                    //console.log(arrDis);
+                    //找数组最小值以及对应的索引
+                    arrDis.sort(function (a, b) {
+                        return a - b;
+                    });
+                    var minVal = arrDis[0];
+                    var minIndex = copyArr.indexOf(minVal); //确定索引
+                    // console.log(minIndex);
+
+                    dragItem.style.left = aItems[minIndex].style.left;
+                    dragItem.style.top = aItems[minIndex].style.top;
+
+                    aItems[minIndex].style.left = cloneNode.style.left;
+                    aItems[minIndex].style.top = cloneNode.style.top;
+
+                    oUl.removeChild(cloneNode);
+
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                };
+
+                return false; //阻止鼠标按下并移动时选中文本的默认行为
+            }
+        }
+    </script>
+
+</body>
+
+</html>
