@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      height: 100%;
+
+    }
+
+    body {
+      height: 100%;
+      background-image: url(yesebeijing.jpg);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    img {
+      width: 20px;
+      position: absolute;
+    }
+  </style>
+</head>
+
+<body>
+  <script src="startMove.js" type="text/javascript" charset="utf-8"></script>
+  <script>
+    function Yinghuo() {
+      this.node = document.createElement("img") //在node创建子元素节点img
+      this.node.src = "firefly.jpg"; //添加图片的路径
+    }
+    Yinghuo.prototype.suijiweizhi = function () { //prototype原型方法
+      //取随机位置的方法
+      let maxL = document.documentElement.clientWidth - 20; //最大的left值
+      let maxT = document.documentElement.clientHeight - 20; //随机位置不会超过可视屏幕
+      this.l = Math.floor(Math.random() * maxL); //随机的left值，指向实例
+      this.t = Math.floor(Math.random() * maxT); //取整（随机值（1~0）*最大值）
+
+    };
+    //萤火虫显示的方法
+    Yinghuo.prototype.liang = function () {
+      //显示之前 先取随机left和top，这时要考虑执行suijiweizhi方法
+      this.suijiweizhi(); //执行随机位置
+      this.node.style.left = this.l + "px"; //赋值位置
+      this.node.style.top = this.t + "px";
+      document.body.appendChild(this.node); //在屏幕显示出来
+    };
+    //萤火虫飞的方法
+    Yinghuo.prototype.fly = function () {
+      //再次需要一个随机位置
+      this.suijiweizhi(); //第二个随机位置
+      startMove(this.node, { //调用封装函数
+        left: this.l,
+        top: this.t
+      }, () => {
+        //考虑this指向
+        // console.log(this);
+        this.fly();
+      });
+    }
+
+    for (let i = 0; i < 80; i++) {
+      let fw = new Yinghuo();
+      fw.liang();
+      fw.fly();
+    }
+  </script>
+
+</body>
+
+</html>
